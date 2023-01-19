@@ -62,3 +62,22 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.column {
+    flex: 50%;
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    padding: 10px;
+}
+
+.smallcolumn {
+    flex: 33%;
+    padding: 10px;
+}

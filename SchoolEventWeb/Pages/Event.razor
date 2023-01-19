@@ -9,37 +9,45 @@
 <h2>Manage Events</h2>
 <hr />
 
-<form>
+<EditForm Model=@obj OnValidSubmit="CreateEvent">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <div class="row">
         <div class="col-md-8">
-            <div class="form-group">
-                <label for="Name" class="control-label">Name</label>
-                <input form="Name" class="form-control" @bind="@obj.Name" />
+                <div class="form-group">
+                    <label for="Name" class="control-label">Name</label>
+                    <input form="Name" class="form-control" @bind="@obj.Name" />
+                </div>
+            <div class="row">
+                <div class="form-group smallcolumn">
+                    <label for="Time" class="control-label">Time</label>
+                    <!--<input form="Time" class="form-control" @bind="@obj.Time" /> -->
+                    <InputDate @bind-Value="@obj.Time" class="form-control" />
+                </div>
+                <div class="form-group smallcolumn">
+                    <label for="AttendancePoints" class="control-label">Attendance Point</label>
+                    <input form="AttendancePoints" class="form-control" @bind="@obj.AttendancePoints" />
+                </div>
+                <div class="form-group smallcolumn">
+                    <label for="ParticipationPoints" class="control-label">Participation Points</label>
+                    <input form="ParticipationPoints" class="form-control" @bind="@obj.ParticipationPoints" />
+                </div>
             </div>
             <div class="form-group">
                 <label for="Description" class="control-label">Description</label>
                 <input form="Description" class="form-control" @bind="@obj.Description" />
             </div>
-            <div class="form-group">
-                <label for="AttendancePoints" class="control-label">Attendance Point</label>
-                <input form="AttendancePoints" class="form-control" @bind="@obj.AttendancePoints" />
-            </div>
-            <div class="form-group">
-                <label for="ParticipationPoints" class="control-label">Participation Points</label>
-                <input form="ParticipationPoints" class="form-control" @bind="@obj.ParticipationPoints" />
-            </div>
-            <div class="form-group">
-                <label for="Time" class="control-label">Time</label>
-                <input form="Time" class="form-control" @bind="@obj.Time" />
-            </div>
+
 
         </div>
     </div>
 
+    <br/>
+
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateEvent" value="Save" />
+                <input type="submit" class="btn btn-primary" value="Save" />
                 <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
             </div>
         </div>
@@ -77,7 +85,7 @@
             </tbody>
         </table>
     }
-</form>
+</EditForm>
 
 
 
