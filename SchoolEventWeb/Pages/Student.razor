@@ -1,0 +1,86 @@
+﻿@page "/student"
+
+<PageTitle>Students</PageTitle>
+
+@using SchoolEventWeb.Data
+@inject NavigationManager NavigationManager
+@inject EventService Service
+
+<h2>Add Student</h2>
+<hr />
+
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Name" class="control-label">Name</label>
+                <input form="Name" class="form-control" @bind="@obj.Name" />
+            </div>
+            <div class="form-group">
+                <label for="City" class="control-label">Grade</label>
+                <input form="City" class="form-control" @bind="@obj.Grade" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@CreateEmployee" value="Save" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+
+    @if (allStudents == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var student in allStudents)
+                {
+                    <tr>
+                        <td>@student.Id</td>
+                        <td>@student.Name</td>
+                        <td>@student.Grade</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</form>
+
+
+
+@code {
+    SchoolEventWeb.Data.Student obj = new SchoolEventWeb.Data.Student();
+    List<SchoolEventWeb.Data.Student> allStudents = new List<SchoolEventWeb.Data.Student>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        allStudents =  Service.GetAllStudents();
+    }
+
+    protected async void CreateEmployee()
+    {
+        Service.InsertStudent(obj);
+        allStudents = Service.GetAllStudents();
+        //NavigationManager.NavigateTo("Employees");
+    }
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

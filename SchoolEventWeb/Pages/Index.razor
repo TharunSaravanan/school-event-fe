@@ -1,0 +1,52 @@
+﻿@page "/"
+
+<PageTitle>Welcome to AHS Events</PageTitle>
+
+@using SchoolEventWeb.Data
+@inject EventService Service
+
+<h1>AHS Upcoming Events</h1>
+
+<p>This component demonstrates fetching data from a service!</p>
+
+@if (ahsevents == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nam</th>
+                <th>Participation Points</th>
+                <th>Attendance Points</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var ahsevent in ahsevents)
+            {
+                <tr>
+                    <td>@ahsevent.Name</td>
+                    <td>@ahsevent.ParticipationPoints</td>
+                    <td>@ahsevent.AttendancePoints</td>
+                    <td>@ahsevent.Time.ToShortDateString()</td>
+                    <td>@ahsevent.Description</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<AhsEvent> ahsevents;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ahsevents = Service.GetUpcomingEvents();
+    }
+}
