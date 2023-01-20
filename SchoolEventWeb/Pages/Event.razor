@@ -14,14 +14,23 @@
     <ValidationSummary />
     <div class="row">
         <div class="col-md-8">
-                <div class="form-group">
+            <div class="row">
+                <div class="form-group col-25" >
                     <label for="Name" class="control-label">Name</label>
                     <input form="Name" class="form-control" @bind="@obj.Name" />
                 </div>
+                <div class="form-group col-25">
+                    <label for="Name" class="control-label">Event Type</label>
+                    <select class="form-control" @bind="@obj.Category" style="width:150px">
+                        <option value=Sport>Sport</option>
+                        <option value=Non-Sport>Non-Sport</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="form-group smallcolumn">
                     <label for="Time" class="control-label">Time</label>
-                    <!--<input form="Time" class="form-control" @bind="@obj.Time" /> -->
                     <InputDate @bind-Value="@obj.Time" class="form-control" />
                 </div>
                 <div class="form-group smallcolumn">
@@ -33,14 +42,15 @@
                     <input form="ParticipationPoints" class="form-control" @bind="@obj.ParticipationPoints" />
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="Description" class="control-label">Description</label>
                 <input form="Description" class="form-control" @bind="@obj.Description" />
             </div>
 
 
+            </div>
         </div>
-    </div>
 
     <br/>
 
@@ -62,10 +72,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Nam</th>
+                    <th>Name</th>
                     <th>Participation Points</th>
                     <th>Attendance Points</th>
                     <th>Date</th>
+                    <th>Category</th>
                     <th>Description</th>
                 </tr>
             </thead>
@@ -78,6 +89,7 @@
                         <td>@ahsevent.ParticipationPoints</td>
                         <td>@ahsevent.AttendancePoints</td>
                         <td>@ahsevent.Time.ToShortDateString()</td>
+                        <td>@ahsevent.Category</td>
                         <td>@ahsevent.Description</td>
 
                     </tr>

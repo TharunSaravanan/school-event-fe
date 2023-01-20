@@ -1,60 +1,200 @@
 ﻿@page "/attendance"
 
-<PageTitle>Event Attendance</PageTitle>
+<PageTitle>Event</PageTitle>
 
 @using SchoolEventWeb.Data
-@inject EventService ForecastService
+@inject NavigationManager NavigationManager
+@inject EventService Service
 
-<h1>Weather forecast</h1>
+<h2>Manage Events</h2>
+<hr />
 
-<p>This component demonstrates fetching data from a service!</p>
+<EditForm Model=@obj OnValidSubmit="SavePoint">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="col-md-8">
+        <div class="row">
+            <div class="form-group col-25">
+                <label for="Name" class="control-label">Completed Events</label>
+                <select class="form-control" style="width:150px" @bind="@selectedEventId">
+                    @foreach (var completedEvent in completedEvents)
+                    {
+                        <option value="@completedEvent.Id">
+                            @completedEvent.Name
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-25">
+                <label for="Name" class="control-label">Grade</label>
+                <select id="someId" class="form-control" style="width:150px" @bind="@selectedGrade" >
+                    <option value=9>9</option>
+                    <option value=10>10</option>
+                    <option value=11>11</option>
+                    <option value=12>12</option>
+                </select>
+            </div>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
+            <div class="form-group col-25">
+                <label for="Name" class="control-label">Students</label>
+                <select class="form-control" style="width:150px" @bind="@selectedStudentId">
+                    @foreach (var ahsStudent in studentsInGrade)
+                    {
+                        <option value="@ahsStudent.Id">
+                            @ahsStudent.Name
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-25">
+                <label for="Name" class="control-label">Attendance</label>
+                <InputRadioGroup @bind-Value="attendanceType">
+                    <div>
+                        <InputRadio id="1radio" Value="0" checked="checked" />
+                        <label for="1radio">Attended - @selectedEvent.AttendancePoints pts</label>
+                    </div>
+
+                    <div>
+                        <InputRadio id="2radio" Value="1" />
+                        <label for="2radio">Participated - @selectedEvent.ParticipationPoints pts</label>
+                    </div>
+                </InputRadioGroup>
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Save" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+
+    @if (completedEvents == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <th>Name</th>
+                    <th>Participation Points</th>
+                    <th>Attendance Points</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
                 </tr>
-            }
-        </tbody>
+            </thead>
 
-        <tbody>
-            @foreach (var ahsevent in ahsevents)
-            {
-                <tr>
-                    <td>@ahsevent.Time.ToShortDateString()</td>
-                    <td>@ahsevent.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+            <tbody>
+                @foreach (var ahsevent in completedEvents)
+                {
+                    <tr>
+                        <td>@ahsevent.Name</td>
+                        <td>@ahsevent.ParticipationPoints</td>
+                        <td>@ahsevent.AttendancePoints</td>
+                        <td>@ahsevent.Time.ToShortDateString()</td>
+                        <td>@ahsevent.Category</td>
+                        <td>@ahsevent.Description</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</EditForm>
+
+
 
 @code {
-    private WeatherForecast[]? forecasts;
-    private IEnumerable<AhsEvent> ahsevents;
+
+    string attendanceType = "0";
+    int selectedStudentId = -1;
+    AhsEvent selectedEvent ;
+
+    int _selectedEventId = -1;
+    int _selectedGrade = 9;
+
+
+    int selectedGrade
+    {
+        get
+        {
+            return _selectedGrade;
+        }
+        set
+        {
+            _selectedGrade = value;
+            UpdateStudents();
+        }
+    }
+
+    int selectedEventId
+    {
+        get
+        {
+            return _selectedEventId;
+        }
+        set
+        {
+            _selectedEventId = value;
+            selectedEvent = completedEvents.First(k => k.Id == _selectedEventId);
+        }
+    }
+
+    Point obj = new Point();
+    List<AhsEvent> completedEvents = new List<AhsEvent>();
+    List<SchoolEventWeb.Data.Student> allStudents = new List<SchoolEventWeb.Data.Student>();
+    List<SchoolEventWeb.Data.Student> studentsInGrade = new List<SchoolEventWeb.Data.Student>();
+
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-        ahsevents = ForecastService.GetUpcomingEvents();
+        completedEvents = Service.GetCompletedEvents();
+        allStudents = Service.GetAllStudents();
+        studentsInGrade = allStudents.Where(k => k.Grade == selectedGrade).ToList();
+        selectedEvent = completedEvents.First();
+        selectedEventId = selectedEvent.Id;
     }
-}
+
+    protected async void SavePoint()
+    {
+        if (selectedEventId == -1 || selectedEventId == -1)
+            return;
+
+        Point point = new Point();
+        point.StudentId = selectedStudentId;
+        point.EventId = selectedEventId;
+        point.StudentGrade = selectedGrade;
+
+        if (attendanceType == "0")
+        {
+            point.IsParticipant = false;
+            point.Points = selectedEvent.AttendancePoints;
+        }
+        else
+        {
+            point.IsParticipant = true;
+            point.Points = selectedEvent.ParticipationPoints;
+        }
+
+    }
+
+    void UpdateStudents()
+    {
+        studentsInGrade = allStudents.Where(k => k.Grade == selectedGrade).ToList();
+    }
+
+    void Cancel()
+    {
+        studentsInGrade = allStudents.Where(k => k.Grade == selectedGrade).ToList();
+        //NavigationManager.NavigateTo("/");
+    }
+    }

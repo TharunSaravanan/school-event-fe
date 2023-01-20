@@ -10,7 +10,6 @@
   "profiles": {
     "SchoolEventWeb": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7084;http://localhost:5087",
       "environmentVariables": {

@@ -81,3 +81,13 @@ a, .btn-link {
     flex: 33%;
     padding: 10px;
 }
+
+.col-75 {
+    flex: 75%;
+    padding: 10px;
+}
+
+.col-25 {
+    flex: 25%;
+    padding: 10px;
+}
