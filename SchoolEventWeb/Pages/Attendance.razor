@@ -94,16 +94,12 @@
             </thead>
 
             <tbody>
-                @foreach (var ahsevent in completedEvents)
+                @foreach (var eventPoint in eventPoints)
                 {
                     <tr>
-                        <td>@ahsevent.Name</td>
-                        <td>@ahsevent.ParticipationPoints</td>
-                        <td>@ahsevent.AttendancePoints</td>
-                        <td>@ahsevent.Time.ToShortDateString()</td>
-                        <td>@ahsevent.Category</td>
-                        <td>@ahsevent.Description</td>
-
+                        <td>@eventPoint.StudentName</td>
+                        <td>@eventPoint.ParticipationType</td>
+                        <td>@eventPoint.Points</td>
                     </tr>
                 }
             </tbody>
@@ -133,6 +129,7 @@
         {
             _selectedGrade = value;
             UpdateStudents();
+            UpdatePointsTable();
         }
     }
 
@@ -146,6 +143,7 @@
         {
             _selectedEventId = value;
             selectedEvent = completedEvents.First(k => k.Id == _selectedEventId);
+            UpdatePointsTable();
         }
     }
 
@@ -154,6 +152,7 @@
     List<SchoolEventWeb.Data.Student> allStudents = new List<SchoolEventWeb.Data.Student>();
     List<SchoolEventWeb.Data.Student> studentsInGrade = new List<SchoolEventWeb.Data.Student>();
 
+    List<EventPoint> eventPoints = new List<EventPoint>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -166,7 +165,7 @@
 
     protected async void SavePoint()
     {
-        if (selectedEventId == -1 || selectedEventId == -1)
+        if (selectedEventId == -1 || selectedGrade == -1)
             return;
 
         Point point = new Point();
@@ -185,11 +184,22 @@
             point.Points = selectedEvent.ParticipationPoints;
         }
 
+        Service.InsertPoint(point);
+        UpdatePointsTable();
+    }
+
+    void UpdatePointsTable()
+    {
+        if (selectedEventId == -1 || selectedGrade == -1)
+            return;
+
+        eventPoints = Service.GetPointsForEvent(selectedEventId, selectedGrade);
     }
 
     void UpdateStudents()
     {
         studentsInGrade = allStudents.Where(k => k.Grade == selectedGrade).ToList();
+        selectedStudentId = studentsInGrade.First().Id;
     }
 
     void Cancel()

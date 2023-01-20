@@ -5,9 +5,9 @@
 @using SchoolEventWeb.Data
 @inject EventService Service
 
-<h1>AHS Upcoming Events</h1>
+<h1>Trojans Upcoming Events</h1>
 
-<p>This component demonstrates fetching data from a service!</p>
+<p>Participate or attend events and win prizes! There are lucky prizes too!</p>
 
 @if (ahsevents == null)
 {
@@ -18,10 +18,11 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Nam</th>
+                <th>Event</th>
                 <th>Participation Points</th>
                 <th>Attendance Points</th>
                 <th>Date</th>
+                <th>Type</th>
                 <th>Description</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@ else
                     <td>@ahsevent.ParticipationPoints</td>
                     <td>@ahsevent.AttendancePoints</td>
                     <td>@ahsevent.Time.ToShortDateString()</td>
+                    <td>@ahsevent.Type</td>
                     <td>@ahsevent.Description</td>
 
                 </tr>

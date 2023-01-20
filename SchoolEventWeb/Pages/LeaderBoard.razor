@@ -1,39 +1,17 @@
 ﻿@page "/leaderboard"
 
-<PageTitle>Students</PageTitle>
+<PageTitle>Leader Board</PageTitle>
 
 @using SchoolEventWeb.Data
 @inject NavigationManager NavigationManager
 @inject EventService Service
 
-<h2>Add Student</h2>
+<h2>Leader Board</h2>
 <hr />
 
 <form>
-    <div class="row">
-        <div class="col-md-8">
-            <div class="form-group">
-                <label for="Name" class="control-label">Name</label>
-                <input form="Name" class="form-control" @bind="@obj.Name" />
-            </div>
-            <div class="form-group">
-                <label for="City" class="control-label">Grade</label>
-                <input form="City" class="form-control" @bind="@obj.Grade" />
-            </div>
 
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <input type="button" class="btn btn-primary" @onclick="@CreateEmployee" value="Save" />
-                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
-            </div>
-        </div>
-    </div>
-
-    @if (allStudents == null)
+    @if (leaderBoardPoints == null)
     {
         <p><em>Loading...</em></p>
     }
@@ -43,18 +21,20 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
+                    <th>Student Name</th>
                     <th>Grade</th>
+                    <th>Total Points</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach (var student in allStudents)
+                @foreach (var eventPoint in leaderBoardPoints)
                 {
                     <tr>
-                        <td>@student.Id</td>
-                        <td>@student.Name</td>
-                        <td>@student.Grade</td>
+                        <td>@eventPoint.StudentId</td>
+                        <td>@eventPoint.StudentName</td>
+                        <td>@eventPoint.StudentGrade</td>
+                        <td>@eventPoint.TotalPoints</td>
                     </tr>
                 }
             </tbody>
@@ -65,20 +45,14 @@
 
 
 @code {
-    SchoolEventWeb.Data.Student obj = new SchoolEventWeb.Data.Student();
-    List<SchoolEventWeb.Data.Student> allStudents = new List<SchoolEventWeb.Data.Student>();
+    List<LeaderBoardPoint> leaderBoardPoints = new List<LeaderBoardPoint>();
 
     protected override async Task OnInitializedAsync()
     {
-        allStudents =  Service.GetAllStudents();
+        leaderBoardPoints = Service.GetLeaderBoardPoints();
     }
 
-    protected async void CreateEmployee()
-    {
-        Service.InsertStudent(obj);
-        allStudents = Service.GetAllStudents();
-        //NavigationManager.NavigateTo("Employees");
-    }
+   
     void Cancel()
     {
         NavigationManager.NavigateTo("/");
