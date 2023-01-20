@@ -76,5 +76,11 @@ namespace SchoolEventWeb.Data
             var result = httpClient.GetFromJsonAsync<List<LeaderBoardPoint>>("point/leaderBoard").Result;
             return result;
         }
+
+        public List<Winner> GetWinners(string quarterName)
+        {
+            var result = httpClient.GetFromJsonAsync<List<Winner>>("point/winner?quarterName=" + quarterName).Result;
+            return result;
+        }
     }
 }

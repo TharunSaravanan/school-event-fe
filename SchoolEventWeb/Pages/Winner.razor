@@ -1,0 +1,51 @@
+﻿@page "/winner"
+
+<PageTitle>AHS Event Participation Winners</PageTitle>
+
+@using SchoolEventWeb.Data
+@inject EventService Service
+
+<h1>Trojans Upcoming Events</h1>
+
+<p>Participate or attend events and win prizes! There are lucky prizes too!</p>
+
+@if (winners == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Grade</th>
+                <th>Student Id</th>
+                <th>Name</th>
+                <th>Prize Type</th>
+                <th>Prize</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var winner in winners)
+            {
+                <tr>
+                    <td>@winner.StudentGrade</td>
+                    <td>@winner.StudentId</td>
+                    <td>@winner.StudentName</td>
+                    <td>@winner.PrizeType</td>
+                    <td>@winner.Prize</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+
+    @code {
+    private IEnumerable<SchoolEventWeb.Data.Winner> winners;
+
+    protected override async Task OnInitializedAsync()
+    {
+        winners = Service.GetWinners("Q4-2022");
+    }
+}

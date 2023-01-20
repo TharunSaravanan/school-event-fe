@@ -91,3 +91,43 @@ a, .btn-link {
     flex: 25%;
     padding: 10px;
 }
+
+.tile-border {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.tile-header {
+    margin: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tile-hr {
+    margin: 0.5rem;
+}
+
+.flex-box {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: 0.5rem;
+}
+
+.margin-inline {
+    margin-inline: 0.5rem;
+}
+
+.margin-btm-0 {
+    margin-bottom: 0;
+}
+
+.multiline-ellipsis {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /* stylelint-disable */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}

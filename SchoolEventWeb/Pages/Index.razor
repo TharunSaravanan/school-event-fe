@@ -19,8 +19,8 @@ else
         <thead>
             <tr>
                 <th>Event</th>
-                <th>Participation Points</th>
-                <th>Attendance Points</th>
+                <th>Participation</th>
+                <th>Attendance</th>
                 <th>Date</th>
                 <th>Type</th>
                 <th>Description</th>
@@ -32,13 +32,27 @@ else
             {
                 <tr>
                     <td>@ahsevent.Name</td>
-                    <td>@ahsevent.ParticipationPoints</td>
-                    <td>@ahsevent.AttendancePoints</td>
+                    <td>@ahsevent.ParticipationPoints pts</td>
+                    <td>@ahsevent.AttendancePoints pts</td>
                     <td>@ahsevent.Time.ToShortDateString()</td>
                     <td>@ahsevent.Type</td>
                     <td>@ahsevent.Description</td>
 
                 </tr>
+
+                <!--
+                <div class="tile-border">
+                    <div class="tile-header">
+                        <span><h6 class="margin-btm-0">@ahsevent.Name</h6> </span>
+                        <span><h6 class="margin-btm-0">@ahsevent.Time.ToShortDateString()</h6></span>
+                    </div>
+                    <hr class="tile-hr" />
+                    <div class="flex-box">
+                        <p>Attendance: <b>@ahsevent.AttendancePoints</b></p>
+                        <p>Participation: <b>@ahsevent.ParticipationPoints</b></p>
+                    </div>
+                    <p class="margin-inline multiline-ellipsis">@ahsevent.Description</p>
+                </div> -->
             }
         </tbody>
     </table>
