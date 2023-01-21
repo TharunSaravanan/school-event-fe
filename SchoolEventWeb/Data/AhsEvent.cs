@@ -18,7 +18,14 @@ namespace SchoolEventWeb.Data
         public int ParticipationPoints { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime Time { get; set; } = DateTime.Today;
+        public DateTime EventDate { get; set; } = DateTime.Today;
+
+        public string Time
+        {
+            get {
+                return EventDate.ToString("yyyy-MM-dd");
+            }
+        }
         public String Type { get; set; } = "Non-Sport";
     }
 }

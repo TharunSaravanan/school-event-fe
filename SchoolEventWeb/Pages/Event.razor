@@ -30,8 +30,8 @@
 
             <div class="row">
                 <div class="form-group smallcolumn">
-                    <label for="Time" class="control-label">Time</label>
-                    <InputDate @bind-Value="@obj.Time" class="form-control" />
+                    <label for="Time" class="control-label">Timee</label>
+                    <InputDate @bind-Value="@obj.EventDate" class="form-control" />
                 </div>
                 <div class="form-group smallcolumn">
                     <label for="AttendancePoints" class="control-label">Attendance Point</label>
@@ -88,7 +88,7 @@
                         <td>@ahsevent.Name</td>
                         <td>@ahsevent.ParticipationPoints</td>
                         <td>@ahsevent.AttendancePoints</td>
-                        <td>@ahsevent.Time.ToShortDateString()</td>
+                        <td>@ahsevent.Time</td>
                         <td>@ahsevent.Type</td>
                         <td>@ahsevent.Description</td>
 
