@@ -71,15 +71,28 @@ namespace SchoolEventWeb.Data
             return result;
         }
 
-        public List<LeaderBoardPoint> GetLeaderBoardPoints()
+        public List<LeaderBoardPoint> GetLeaderBoardPoints(string quarterName)
         {
-            var result = httpClient.GetFromJsonAsync<List<LeaderBoardPoint>>("point/leaderBoard").Result;
+            var result = httpClient.GetFromJsonAsync<List<LeaderBoardPoint>>("point/leaderBoard?quarterName=" + quarterName).Result;
+            result = result.OrderByDescending(x => x.TotalPoints).ToList();
             return result;
         }
 
         public List<Winner> GetWinners(string quarterName)
         {
             var result = httpClient.GetFromJsonAsync<List<Winner>>("point/winner?quarterName=" + quarterName).Result;
+            return result;
+        }
+
+        public List<Quarter> GetQuarters()
+        {
+            var result = httpClient.GetFromJsonAsync<List<Quarter>>("point/quarters").Result;
+            return result;
+        }
+
+        public List<Winner> LuckyDraw(string quarterName)
+        {
+            var result = httpClient.GetFromJsonAsync<List<Winner>>("point/draw?quarterName=" + quarterName).Result;
             return result;
         }
     }

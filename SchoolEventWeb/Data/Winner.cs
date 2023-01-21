@@ -10,6 +10,7 @@
         public string WinnerType { get; set; }
         public string PrizeType { get; set; }
         public string Prize { get; set; }
+        public int Rank { get; set; }
 
     }
 }
