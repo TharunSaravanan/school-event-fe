@@ -1,4 +1,7 @@
+using Newtonsoft.Json;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json.Serialization;
 using static System.Net.WebRequestMethods;
 
 namespace SchoolEventWeb.Data
@@ -29,7 +32,12 @@ namespace SchoolEventWeb.Data
 
         public void InsertEvent(AhsEvent ahsevent)
         {
-            var result = httpClient.PostAsJsonAsync("/event/add", ahsevent).Result;
+            var jsonSettings = new JsonSerializerSettings();
+            jsonSettings.DateFormatString = "yyyy-MM-ddThh:mm:ss";
+
+            string json = JsonConvert.SerializeObject(ahsevent, jsonSettings);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsJsonAsync("/event/add", content).Result;
         }
 
         public void InsertPoint(Point point)

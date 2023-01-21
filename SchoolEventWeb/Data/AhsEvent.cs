@@ -16,7 +16,24 @@ namespace SchoolEventWeb.Data
         public int AttendancePoints { get; set; }
         [Range(25, 100, ErrorMessage = "Participation points should be between 10 and 50.")]
         public int ParticipationPoints { get; set; }
-        public DateTime Time { get; set; } = DateTime.Now;
+
+        private DateTime _time;
+        public DateTime Time { 
+            get
+            {
+                return _time.Date;
+            }
+
+            set
+            {
+                _time = value;
+            }
+        } 
         public String Type { get; set; } = "Non-Sport";
+
+        public AhsEvent()
+        {
+            _time = DateTime.Today;
+        }
     }
 }
