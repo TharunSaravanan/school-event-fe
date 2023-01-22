@@ -25,6 +25,9 @@ namespace SchoolEventWeb.Data
             get {
                 return EventDate.ToString("yyyy-MM-dd");
             }
+            set {
+                EventDate = DateTime.Parse(value);
+            }
         }
         public String Type { get; set; } = "Non-Sport";
     }

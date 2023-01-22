@@ -30,7 +30,7 @@
 
             <div class="row">
                 <div class="form-group smallcolumn">
-                    <label for="Time" class="control-label">Timee</label>
+                    <label for="Time" class="control-label">Time</label>
                     <InputDate @bind-Value="@obj.EventDate" class="form-control" />
                 </div>
                 <div class="form-group smallcolumn">
@@ -107,13 +107,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        upcomingEvents = Service.GetUpcomingEvents();
+        upcomingEvents = Service.GetAllEvents();
     }
 
     protected async void CreateEvent()
     {
         Service.InsertEvent(obj);
-        upcomingEvents = Service.GetUpcomingEvents();
+        upcomingEvents = Service.GetAllEvents();
         //NavigationManager.NavigateTo("Employees");
     }
     void Cancel()

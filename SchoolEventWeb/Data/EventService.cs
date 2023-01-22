@@ -18,13 +18,19 @@ namespace SchoolEventWeb.Data
         public List<AhsEvent> GetUpcomingEvents()
         {
             var result = httpClient.GetFromJsonAsync<List<AhsEvent>>("event/upcomingEvents").Result;
-            return result;
+            return result.OrderByDescending(k => k.Time).ToList();
         }
 
         public List<AhsEvent> GetCompletedEvents()
         {
             var result = httpClient.GetFromJsonAsync<List<AhsEvent>>("event/completedEvents").Result;
-            return result;
+            return result.OrderByDescending(k => k.Time).ToList();
+        }
+
+        public List<AhsEvent> GetAllEvents()
+        {
+            var result = httpClient.GetFromJsonAsync<List<AhsEvent>>("event/allEvents").Result;
+            return result.OrderByDescending(k => k.Time).ToList();
         }
 
         public void InsertEvent(AhsEvent ahsevent)
