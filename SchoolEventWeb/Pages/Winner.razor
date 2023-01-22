@@ -5,9 +5,36 @@
 @using SchoolEventWeb.Data
 @inject EventService Service
 
-<h1>Trojans Upcoming Events</h1>
+<h1>Event Participation Winners</h1>
 
-<p>Participate or attend events and win prizes! There are lucky prizes too!</p>
+<EditForm Model=@winners OnValidSubmit="ShowWinners">
+<div class="col-md-8">
+    <div class="row">
+
+        <div class="form-group col-25">
+            <label for="Name" class="control-label">Select Quarter</label>
+            <select class="form-control" style="width:150px" @bind="@selectedQuarterName">
+                @foreach (var q in quarters)
+                {
+                    <option value="@q.Name">
+                        @q.Name
+                    </option>
+                }
+            </select>
+        </div>
+
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Show Winners" />
+        </div>
+    </div>
+</div>
 
 @if (winners == null)
 {
@@ -40,12 +67,23 @@ else
         </tbody>
     </table>
     }
+</EditForm>
 
     @code {
+
+    private List<Quarter> quarters;
     private IEnumerable<SchoolEventWeb.Data.Winner> winners;
+    private string selectedQuarterName;
 
     protected override async Task OnInitializedAsync()
     {
-        winners = Service.GetWinners("Q4-2022");
+        quarters = Service.GetQuarters();
+        selectedQuarterName = quarters[0].Name;
+        winners = Service.GetWinners(selectedQuarterName);
+    }
+
+    protected async void ShowWinners()
+    {
+        winners = Service.GetWinners(selectedQuarterName);
     }
 }
