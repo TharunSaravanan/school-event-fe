@@ -1,12 +1,12 @@
 ﻿@page "/event"
 
-<PageTitle>Event</PageTitle>
+<PageTitle>Add Events</PageTitle>
 
 @using SchoolEventWeb.Data
 @inject NavigationManager NavigationManager
 @inject EventService Service
 
-<h2>Manage Events</h2>
+<h2>Add Events</h2>
 <hr />
 
 <EditForm Model=@obj OnValidSubmit="CreateEvent">
@@ -34,7 +34,7 @@
                     <InputDate @bind-Value="@obj.EventDate" class="form-control" />
                 </div>
                 <div class="form-group smallcolumn">
-                    <label for="AttendancePoints" class="control-label">Attendance Point</label>
+                    <label for="AttendancePoints" class="control-label">Attendance Points</label>
                     <input form="AttendancePoints" class="form-control" @bind="@obj.AttendancePoints" />
                 </div>
                 <div class="form-group smallcolumn">
@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Description" class="control-label">Description</label>
+                <label for="Description" class="control-label">Requirements</label>
                 <input form="Description" class="form-control" @bind="@obj.Description" />
             </div>
 
@@ -57,7 +57,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Save" />
+                <input type="submit" class="btn btn-primary" value="Add" />
                 <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
             </div>
         </div>
@@ -77,7 +77,7 @@
                     <th>Attendance Points</th>
                     <th>Date</th>
                     <th>Type</th>
-                    <th>Description</th>
+                    <th>Requirements</th>
                 </tr>
             </thead>
 

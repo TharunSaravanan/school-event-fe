@@ -1,12 +1,12 @@
 ﻿@page "/attendance"
 
-<PageTitle>Event</PageTitle>
+<PageTitle>Assign Points</PageTitle>
 
 @using SchoolEventWeb.Data
 @inject NavigationManager NavigationManager
 @inject EventService Service
 
-<h2>Manage Events</h2>
+<h2>Assign Points</h2>
 <hr />
 
 <EditForm Model=@obj OnValidSubmit="SavePoint">
@@ -47,7 +47,7 @@
                 </select>
             </div>
             <div class="form-group col-25">
-                <label for="Name" class="control-label">Attendance</label>
+                <label for="Name" class="control-label">Assign Points</label>
                 <InputRadioGroup @bind-Value="attendanceType">
                     <div>
                         <InputRadio id="1radio" Value="0" checked="checked" />
@@ -85,11 +85,8 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Participation Points</th>
-                    <th>Attendance Points</th>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Description</th>
+                    <th>Participation Type</th>
+                    <th>Points</th>
                 </tr>
             </thead>
 

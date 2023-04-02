@@ -1,12 +1,12 @@
 ﻿@page "/leaderboard"
 
-<PageTitle>Leader Board</PageTitle>
+<PageTitle>Leaderboard</PageTitle>
 
 @using SchoolEventWeb.Data
 @inject NavigationManager NavigationManager
 @inject EventService Service
 
-<h2>Leader Board</h2>
+<h2>Leaderboard</h2>
 <hr />
 
 <EditForm Model=@leaderBoardPoints OnValidSubmit="LoadLeaderBoard">
@@ -34,7 +34,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Show Leader Board" />
+                <input type="submit" class="btn btn-primary" value="Show Leaderboard" />
             </div>
         </div>
     </div>
@@ -49,7 +49,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Student Name</th>
                     <th>Grade</th>
                     <th>Total Points</th>
@@ -60,7 +59,6 @@
                 @foreach (var eventPoint in leaderBoardPoints)
                 {
                     <tr>
-                        <td>@eventPoint.StudentId</td>
                         <td>@eventPoint.StudentName</td>
                         <td>@eventPoint.StudentGrade</td>
                         <td>@eventPoint.TotalPoints</td>

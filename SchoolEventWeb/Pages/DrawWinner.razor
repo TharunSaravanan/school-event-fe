@@ -1,20 +1,19 @@
 ﻿@page "/drawwinner"
 
-<PageTitle>AHS Event Participation Winners</PageTitle>
+<PageTitle>Draw Winners</PageTitle>
 
 @using SchoolEventWeb.Data
 @inject EventService Service
 
-<h1>Trojans Upcoming Events</h1>
+<h1>Draw Winners</h1>
 
-<p>Participate or attend events and win prizes! There are lucky prizes too!</p>
 
 <EditForm Model=@winners OnValidSubmit="SelectWinners">
     <div class="col-md-8">
         <div class="row">
 
             <div class="form-group col-25">
-                <label for="Name" class="control-label">Students</label>
+                <label for="Name" class="control-label">Quarter</label>
                 <select class="form-control" style="width:150px" @bind="@selectedQuarterName">
                     @foreach (var q in quarters)
                     {
