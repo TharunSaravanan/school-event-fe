@@ -1,0 +1,40 @@
+﻿@page "/login"
+
+@using SchoolEventWeb.Data
+
+<h3>Login</h3>
+
+<div class="form-group">
+    <label for="username">Email:</label>
+    <input id="username" class="form-control" @bind="username" />
+</div>
+
+<div class="form-group">
+    <label for="password">Password:</label>
+    <input id="password" type="password" class="form-control" @bind="password" />
+</div>
+
+<button type="button" class="btn btn-primary" @onclick="HandleLogin">Login</button>
+
+@code {
+    private string username;
+    private string password;
+    private string type;
+
+    private void HandleLogin()
+    {
+        HttpClient httpClient = new HttpClient();
+
+        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+        {
+            // Perform login logic here
+            var result = httpClient.GetStringAsync("http://localhost:8080/user/authenticate?email=" + username + "&password=" + password).Result;
+
+            // Redirect to another page or perform other actions
+        }
+        else
+        {
+            // Display error message or perform other actions for invalid login
+        }
+    }
+}
