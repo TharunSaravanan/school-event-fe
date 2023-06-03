@@ -25,30 +25,34 @@
             </NavLink>
         </div>
 
-        <br/>
-        <br/>
-        <p style="text-align:center; color:white; font-size:medium">Administration</p>
+        <br />
+        <br />
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="attendance">
-                <span class="oi oi-plus" aria-hidden="true"></span> Assign Points
-            </NavLink>
+        <div hidden="@hideAdmin">
+            <p style="text-align:center; color:white; font-size:medium">Administration</p>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="attendance">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Assign Points
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="drawwinner">
+                    <span class="oi oi-aperture" aria-hidden="true"></span> Draw Winners
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="event">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Add Events
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="student">
+                    <span class="oi oi-people" aria-hidden="true"></span> Add Students
+                </NavLink>
+            </div>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="drawwinner">
-                <span class="oi oi-aperture" aria-hidden="true"></span> Draw Winners
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="event">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Add Events
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="student">
-                <span class="oi oi-people" aria-hidden="true"></span> Add Students
-            </NavLink>
-        </div>
+
 
     </nav>
 </div>
@@ -58,8 +62,24 @@
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    public bool hideAdmin = true;
+    public static NavMenu MenuInstance = null;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        MenuInstance = this;
+    }
+
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    public void ShowAdminMenu()
+    {
+        hideAdmin = false;
+        StateHasChanged();
     }
 }

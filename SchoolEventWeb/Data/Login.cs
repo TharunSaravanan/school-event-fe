@@ -8,13 +8,13 @@ namespace SchoolEventWeb.Data
 		public int Id { get; set; }
 
 		[Required]
-		public int Email { get; set; }
+		public String Email { get; set; }
 
 		[Required]
-		public int Password { get; set; }
+		public String Password { get; set; }
 
 		[Required]
-		public int Type { get; set; }
+		public String Type { get; set; }
 
 		public User()
 		{
