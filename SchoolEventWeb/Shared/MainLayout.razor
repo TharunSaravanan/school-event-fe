@@ -9,8 +9,9 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-            <a href="login">Login</a>
+            <label hidden="@showLogin">@userName</label>
+            <a href="login" hidden="@(!showLogin)">Login</a>
+            <a href="logout" hidden="@showLogin">Logout</a>
         </div>
 
         <article class="content px-4">
@@ -18,3 +19,34 @@
         </article>
     </main>
 </div>
+
+@code {
+
+    bool showLogin = true;
+    string userName = "";
+
+    public static MainLayout MainLayoutInstance = null;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        MainLayoutInstance = this;
+        ShowLogin();
+    }
+
+    public void ShowLogout(string name)
+    {
+        userName = name;
+        showLogin = false;
+        StateHasChanged();
+    }
+
+    public void ShowLogin()
+    {
+        showLogin = true;
+        StateHasChanged();
+    }
+
+
+}

@@ -5,7 +5,7 @@
 
 <h3>Login</h3>
 
-<EditForm Model="@user" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model=@user OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label for="username">Email:</label>
@@ -18,13 +18,18 @@
         <input id="password" type="password" class="form-control" @bind="user.Password" />
         <ValidationMessage For="@(() => user.Password)" />
     </div>
-
-    <input type="button" class="btn btn-primary" @onclick="@HandleValidSubmit" value="Login" />
+    <div>
+            <label style="color: red">@loginError</label>
+    </div>
+    <br />
+    <input type="submit" class="btn btn-primary" @onclick="@HandleValidSubmit" value="Login" />
 </EditForm>
 
     @code {
 
         private string type;
+        public string name;
+        private string loginError;
         private User user = new User();
 
         private void HandleValidSubmit()
@@ -37,27 +42,31 @@
                 // Perform login logic here
                 var result = httpClient.GetStringAsync("http://localhost:8080/user/authenticate?email=" + user.Email + "&password=" + user.Password).Result;
 
-                if (result == "admin")
+                if (result == "0")
+                {
+                    loginError = "Invalid username or password entered";
+                    return;
+                }
+
+                // result : admin,kallisti or student,tharun
+                string[] words = result.Split(',');
+                type = words[0];
+                name = words[1];
+
+                MainLayout.MainLayoutInstance.ShowLogout("Hi " + name + "!");
+
+                if (type == "admin")
                 {
                     NavMenu.MenuInstance.ShowAdminMenu();
                     NavManager.NavigateTo("/");
                 }
-                else if (result == "student")
+                else if (type == "student")
                 {
 
                     NavManager.NavigateTo("/");
                 }
-                else
-                {
-
-                }
+               
             }
-            else
-            {
-
-            }
-
-
         }
 
     }

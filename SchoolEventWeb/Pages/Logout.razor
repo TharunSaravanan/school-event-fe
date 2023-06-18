@@ -1,0 +1,16 @@
+﻿@page "/logout"
+
+@using SchoolEventWeb.Data
+@inject NavigationManager NavManager
+
+<h2>You have successfully logged out.</h2>
+
+@code{
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        NavMenu.MenuInstance.HideAdminMenu();
+        MainLayout.MainLayoutInstance.ShowLogin();
+    }
+}
