@@ -26,6 +26,17 @@
                 </select>
             </div>
 
+            <div class="form-group col-25">
+                <label for="Grade" class="control-label">Select Grade</label>
+                <select id="someId" class="form-control" style="width:150px" @bind="@selectedGrade">
+                    <option value=0>All</option>
+                    <option value=9>9</option>
+                    <option value=10>10</option>
+                    <option value=11>11</option>
+                    <option value=12>12</option>
+                </select>
+            </div>
+
         </div>
     </div>
 
@@ -73,7 +84,9 @@
 
 @code {
     string selectedQuarterName;
+    int selectedGrade = 0;
     private List<Quarter> quarters;
+    private List<Student> students;
 
     List<LeaderBoardPoint> leaderBoardPoints = new List<LeaderBoardPoint>();
 
@@ -87,11 +100,14 @@
     void LoadLeaderBoard()
     {
         leaderBoardPoints = Service.GetLeaderBoardPoints(selectedQuarterName);
+
+        if (selectedGrade != 0)
+            leaderBoardPoints = leaderBoardPoints.Where(k => k.StudentGrade == selectedGrade).ToList<LeaderBoardPoint>();
     }
 
-   
+
     void Cancel()
     {
         NavigationManager.NavigateTo("/");
     }
-}
+    }
