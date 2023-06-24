@@ -14,7 +14,7 @@ namespace SchoolEventWeb.Data
 
         [Range(10, 50, ErrorMessage = "Attendance points should be between 10 and 50.")]
         public int AttendancePoints { get; set; }
-        [Range(25, 100, ErrorMessage = "Participation points should be between 10 and 50.")]
+        [Range(25, 100, ErrorMessage = "Participation points should be between 25 and 100.")]
         public int ParticipationPoints { get; set; }
 
         [DataType(DataType.Date)]
