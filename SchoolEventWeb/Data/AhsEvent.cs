@@ -10,7 +10,7 @@ namespace SchoolEventWeb.Data
         public string Name { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public string Requirement { get; set; }
 
         [Range(10, 50, ErrorMessage = "Attendance points should be between 10 and 50.")]
         public int AttendancePoints { get; set; }
